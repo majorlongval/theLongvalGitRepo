@@ -1,5 +1,5 @@
 from turtle import Turtle, Screen
-
+import random
 screen = Screen()
 screen_w = 500
 screen_h = 400
@@ -21,10 +21,19 @@ def setup_game():
 
 
 set_of_turtles = setup_game()
-print(set_of_turtles)
-
-
-
+finished = False
+while not finished:
+    for turtle in set_of_turtles:
+        turtle.forward(random.randint(0, 10))
+        if turtle.xcor() >= 230:
+            winner_color = turtle.color()[0]
+            print(f"the {winner_color} turtle has won")
+            if winner_color == user_bet:
+                print("You won !!!!! Bravo")
+            else:
+                print("You lost, give me your money...")
+            finished = True
+            break
 
 
 
