@@ -1,5 +1,5 @@
 #### Notes on SnakeGame for Udemy 100 days of Python:
-
+( https://www.udemy.com/course/100-days-of-code/learn/lecture/20356939#questions)
 - Game starts automatically
 - Game board border drawn in blue  
 - Snake heading East (0)
@@ -9,6 +9,12 @@
 - Collision with self implemented (although
   there seems to be bugs, where collision
   does not register.)
+
+#### Keyboard movement:
+  - 'q' - Quits game
+  - 'r' - Reset game
+- left cursor - rotate left
+- right cursor - rotate right 
 
 #### To do:
 - implement place_food()
@@ -26,3 +32,5 @@ snake position with positions of other parts
   of snake. 
 - collision with wall by checking position
 of head with border (after new head added)
+  
+
