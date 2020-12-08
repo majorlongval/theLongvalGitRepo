@@ -3,7 +3,7 @@ from turtle import Turtle, Screen
 screen = Screen()
 screen_w = 500
 screen_h = 400
-screen.setup(width=500, height=400)
+screen.setup(width=screen_w, height=screen_h)
 
 user_bet = screen.textinput(title='Make your bet', prompt="Which turtle will win the race?")
 colors = ["red", "orange", "yellow", "green", "blue", "purple"]
@@ -20,8 +20,8 @@ def setup_game():
     return set_of_turtles
 
 
-setup_game()
-
+set_of_turtles = setup_game()
+print(set_of_turtles)
 
 
 
