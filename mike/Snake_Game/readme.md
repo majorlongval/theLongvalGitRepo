@@ -1,4 +1,4 @@
-####Notes on SnakeGame for Udemy 100 days of Python:
+#### Notes on SnakeGame for Udemy 100 days of Python:
 
 - Game starts automatically
 - Game board border drawn in blue  
@@ -10,13 +10,13 @@
   there seems to be bugs, where collision
   does not register.)
 
-####To do:
+#### To do:
 - implement place_food()
 - implement detect_collision_with_food()
 - implement grow_snake()
 - implement scoreboard()
 
-####Mechanism of game:
+#### Mechanism of game:
 - snake is implemented a list of turtles.
 - "movement" is accomplished by adding a 
   new turtle at one end and removing one at 
