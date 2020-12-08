@@ -44,7 +44,7 @@ def reset_game():
         turtle.hideturtle()
     turtle_list = list()
     current_heading = 0
-    max_snake_length = 4  # initialize to this value
+    max_snake_length = 8  # initialize to this value
     run_game()
 
 
