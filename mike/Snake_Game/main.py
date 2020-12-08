@@ -81,6 +81,8 @@ def detect_collision_with_wall():
 
 def draw_outline():
     # This just draws the outline of the game board.
+    global the_screen
+    the_screen.tracer(5)
     timmy = Turtle()
     timmy.hideturtle()
     timmy.pencolor("blue")
@@ -95,7 +97,8 @@ def draw_outline():
     timmy.forward(size_y * 2)
     timmy.setheading(0)
     timmy.forward(size_x * 2)
-
+    the_screen.update()
+    sleep(3)
 
 def run_game():
     global turtle_list
@@ -109,7 +112,6 @@ def run_game():
     current_heading = turtle_list[0].heading()
     game_is_on = True
     while game_is_on:
-    # while True:
         the_screen.tracer(500)
         turtle_list.append(turtle_list[-1].clone())
         turtle_list[-1].hideturtle()
@@ -124,6 +126,7 @@ def run_game():
 
         detect_collision_with_self()
         detect_collision_with_wall()
+        sleep(0.125)
 # end run_game()
 
 
