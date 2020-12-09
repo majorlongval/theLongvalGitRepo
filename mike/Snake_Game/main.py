@@ -1,4 +1,4 @@
-"""The Snake Game. Version 0.3 beta
+"""The Snake Game. Version 0.4 beta
 Built for the Udemy 100 days of Python code
 Copyleft 2020 mlongval@gmail.com"""
 
@@ -30,7 +30,7 @@ game_is_on = True
 turtle_list = list()
 current_heading = 0
 max_snake_length = 4  # initialize to this value
-
+the_piece_of_food = None
 
 ##################################################
 # Function definitions
@@ -39,6 +39,10 @@ def reset_game():
     global turtle_list
     global current_heading
     global max_snake_length
+    global the_piece_of_food
+    the_piece_of_food.hideturtle()
+    the_piece_of_food = None
+    place_food()
     game_is_on = True
     for turtle in turtle_list:
         turtle.hideturtle()
@@ -74,8 +78,8 @@ def detect_collision_with_wall():
     test_y = int(abs(turtle_list[-1].ycor())) >= the_screen.screensize()[1]
     if test_x or test_y:
         print("Crash into wall")
-        #print(f"X: {turtle_list[-1].pos()[0]}")
-        #print(f"Y: {turtle_list[-1].pos()[1]}")
+        # print(f"X: {turtle_list[-1].pos()[0]}")
+        # print(f"Y: {turtle_list[-1].pos()[1]}")
         game_is_on = False
 
 
@@ -100,6 +104,37 @@ def draw_outline():
     the_screen.update()
     sleep(3)
 
+
+def detect_collision_with_food():
+    global the_piece_of_food
+    global turtle_list
+    if the_piece_of_food.position() == turtle_list[-1].position():
+        print("food eaten")
+        the_piece_of_food.hideturtle()
+        the_piece_of_food = None
+        place_food()
+
+
+def place_food():
+    """Place a piece of food on game area at random location.
+    NB there is no checking to make sure that it is not placed
+    on the snake."""
+    global the_screen
+    global the_piece_of_food
+    if the_piece_of_food is None:
+        maximum_x = int(the_screen.screensize()[0] / 40)
+        maximum_y = int(the_screen.screensize()[1] / 40)
+        food_x = randint(-1 * maximum_x, maximum_x) * 40
+        food_y = randint(-1 * maximum_y, maximum_y) * 40
+        food = Turtle(shape="square")
+        food.hideturtle()
+        food.penup()
+        food.color("blue")
+        food.setpos(food_x, food_y)
+        food.showturtle()
+        the_piece_of_food = food
+
+
 def run_game():
     global turtle_list
     global current_heading
@@ -111,6 +146,7 @@ def run_game():
     turtle_list[0].color("white")
     current_heading = turtle_list[0].heading()
     game_is_on = True
+
     while game_is_on:
         the_screen.tracer(500)
         turtle_list.append(turtle_list[-1].clone())
@@ -126,7 +162,10 @@ def run_game():
 
         detect_collision_with_self()
         detect_collision_with_wall()
+        detect_collision_with_food()
         sleep(0.125)
+
+
 # end run_game()
 
 
@@ -139,5 +178,6 @@ the_screen.onkey(key="r", fun=reset_game)
 the_screen.onkey(key="q", fun=exit)
 the_screen.listen()
 draw_outline()
+place_food()
 reset_game()
 the_screen.exitonclick()

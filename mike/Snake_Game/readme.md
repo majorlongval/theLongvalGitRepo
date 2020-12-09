@@ -17,8 +17,8 @@
 - right cursor - rotate right 
 
 #### To do:
-- implement place_food()
-- implement detect_collision_with_food()
+- implement place_food()  (DONE)
+- implement detect_collision_with_food() (DONE)
 - implement grow_snake()
 - implement scoreboard()
 
