@@ -1,1 +1,10 @@
+<<<<<<< HEAD
 venv
+=======
+**/.idea/**
+**/venv/
+**/env/
+**/__pychache__/
+*.pyc
+.DS_Store
+>>>>>>> mike
