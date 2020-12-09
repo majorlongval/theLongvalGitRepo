@@ -1,17 +1,36 @@
 from turtle import Turtle, Screen
-
-tim = Turtle()
+import time
 screen = Screen()
+screen.setup(width=600, height=600)
+screen.bgcolor('black')
+screen.title('My snake game')
+screen.tracer(0)
+
+snake = []
+snake_speed = 10
+# Initializing the game
+default_width = 20
+number_of_starting_segments = 3
+for i in range(0, number_of_starting_segments):
+    temp_segment = Turtle(shape='square')
+    temp_segment.color('white')
+    temp_segment.penup()
+    temp_segment.setx(-default_width*i)
+    snake.append(temp_segment)
 
 
-def move_forwards():
-    tim.forward(10)
+game_is_on = True
 
-def move_backwards():
-    tim.backward(10)
+while game_is_on:
+    screen.update()
+    time.sleep(1/snake_speed)
+    inv_snake = snake[::-1]
+    for i, seg in enumerate(inv_snake[:-1]):
+        seg.goto(x=inv_snake[i+1].xcor(), y=inv_snake[i+1].ycor())
+
+    snake[0].left(90)
+    snake[0].forward(20)
 
 
-screen.listen()
-screen.onkey(key="w", fun=move_forwards)
-screen.onkey(key="s", fun=move_backwards)
 screen.exitonclick()
+
