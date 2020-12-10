@@ -23,7 +23,7 @@ class Snake(Segments):
             segment.hideturtle()
         self.clear()
         self.segment_len = 20
-        self.max_len = 4
+        self.max_len = 12
         self.heading = 0
         head = Turtle(shape='square')
         head.penup()
@@ -47,19 +47,27 @@ class Snake(Segments):
         if len(self) > self.max_len:
             self.delete_segment()
         self.screen.update()
+        self.self_collision_detect()
 
     def delete_segment(self, segment: int = 0):
         self[segment].hideturtle()
         self.pop(segment)
 
-    def wall_collsion_detect(self):
+    def wall_collision_detect(self):
         pass
 
     def self_collision_detect(self):
-        pass
+        position_list = [segment.position() for segment in self]
+        int_position_list = [(int(x[0]), int(x[1])) for x in position_list]
+        if len(int_position_list) > len(set(int_position_list)):
+            print("collision with self")
+            self.reset()
 
     def food_collision_detect(self):
         pass
+
+    def quit_game(self):
+        self.screen.bye()
 
 
 class Food:
@@ -80,6 +88,29 @@ class Board():
 
     def setup(self, *args, **kwargs):
         self.screen.setup(*args, **kwargs)
+        self.draw_border()
+
+
+
+    def draw_border(self):
+        self.screen.tracer(500)
+        tim = Turtle()
+        tim.hideturtle()
+        tim.color("blue")
+        tim.pensize(4)
+        tim.penup()
+        tim.goto(self.screen.screensize())
+        tim.pendown()
+        print(self.screen.screensize())
+        tim.setheading(270)
+        tim.forward(self.screen.screensize()[1] * 2)
+        tim.setheading(180)
+        tim.forward(self.screen.screensize()[0] * 2)
+        tim.setheading(90)
+        tim.forward(self.screen.screensize()[1] * 2)
+        tim.setheading(0)
+        tim.forward(self.screen.screensize()[0] * 2)
+        self.update()
 
     def listen(self):
         self.screen.listen()
@@ -102,23 +133,22 @@ class Board():
 class ScoreBoard:
     pass
 
-def quit_game():
-    exit()
 
 def main():
     the_screen = Board(40)
-    the_screen.setup(width=1.0, height=1.0, startx=None, starty=None)
+    the_screen.screen.screensize(640, 640)
+    the_screen.setup(width=1.0, height=1.0)
     the_screen.bgcolor("black")
     snake1 = Snake(the_screen)
     the_screen.onkey(key="Left", fun=snake1.turn_left)
     the_screen.onkey(key="Right", fun=snake1.turn_right)
-    the_screen.onkey(key="q", fun=quit_game)
+    the_screen.onkey(key="q", fun=snake1.quit_game)
     the_screen.onkey(key="r", fun=snake1.reset)
     the_screen.listen()
     while True:
         snake1.move()
         snake1.wall_collision_detect()
-        snake1.self_collision_detect()
+#       snake1.self_collision_detect()
         snake1.food_collision_detect()
         sleep(0.125)
     the_screen.exitonclick()
