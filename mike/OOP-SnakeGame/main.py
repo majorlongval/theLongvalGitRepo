@@ -52,6 +52,15 @@ class Snake(Segments):
         self[segment].hideturtle()
         self.pop(segment)
 
+    def wall_collsion_detect(self):
+        pass
+
+    def self_collision_detect(self):
+        pass
+
+    def food_collision_detect(self):
+        pass
+
 
 class Food:
     pass
@@ -108,6 +117,9 @@ def main():
     the_screen.listen()
     while True:
         snake1.move()
+        snake1.wall_collision_detect()
+        snake1.self_collision_detect()
+        snake1.food_collision_detect()
         sleep(0.125)
     the_screen.exitonclick()
 
