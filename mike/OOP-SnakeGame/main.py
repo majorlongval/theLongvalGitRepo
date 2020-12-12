@@ -4,6 +4,7 @@
 from turtle import Turtle
 from turtle import Screen
 from time import sleep
+from random import randint
 from typing import List
 Segments = List[Turtle]
 
@@ -48,13 +49,21 @@ class Snake(Segments):
             self.delete_segment()
         self.screen.update()
         self.self_collision_detect()
+        self.wall_collision_detect()
 
     def delete_segment(self, segment: int = 0):
         self[segment].hideturtle()
         self.pop(segment)
 
     def wall_collision_detect(self):
-        pass
+        x_width = self.screen.screen.screensize()[0]
+        y_width = self.screen.screen.screensize()[1]
+        if (x_width <= self[-1].pos()[0]) or (self[-1].pos()[0] <= (-1 * x_width)):
+            print("Collision on left or right")
+            self.reset()
+        if (y_width <= self[-1].pos()[1]) or (self[-1].pos()[1] <= (-1 * y_width)):
+            print("Collision on top or bottom")
+            self.reset()
 
     def self_collision_detect(self):
         position_list = [segment.position() for segment in self]
@@ -63,18 +72,51 @@ class Snake(Segments):
             print("collision with self")
             self.reset()
 
-    def food_collision_detect(self):
-        pass
+    def food_collision_detect(self, the_food):
+        if self[-1].pos()[0] == the_food.x and self[-1].pos()[1] == the_food.y:
+            print("Food eaten")
+            return True
+        else:
+            return False
+
 
     def quit_game(self):
         self.screen.bye()
 
 
-class Food:
-    pass
+class Food():
+    turtle: Turtle
+    x: float
+    y: float
+
+    def __init__(self, screen: Screen, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.screen = screen
+
+    def place_food(self):
+        self.turtle = Turtle()
+        self.turtle.hideturtle()
+        self.turtle.penup()
+        self.turtle.color('blue')
+        self.turtle.shape("square")
+        x_maximum = self.screen.screen.screensize()[0]
+        y_maximum = self.screen.screen.screensize()[1]
+        int_x_on_grid = x_maximum / 20
+        int_y_on_grid = y_maximum / 20
+        x_pos = randint(-int_x_on_grid, int_x_on_grid) * 20
+        y_pos = randint(-int_y_on_grid, int_y_on_grid) * 20
+        print("food coord: ", x_pos, y_pos)
+        self.turtle.goto(x_pos, y_pos)
+        self.x = x_pos
+        self.y = y_pos
+        self.turtle.showturtle()
+
+    def eat(self):
+        self.turtle.hideturtle()
+        del self
 
 
-class Board():
+class Board:
     def __init__(self, square_size: int = 40):
         self.square_size = square_size
         self.screen = Screen()
@@ -89,8 +131,6 @@ class Board():
     def setup(self, *args, **kwargs):
         self.screen.setup(*args, **kwargs)
         self.draw_border()
-
-
 
     def draw_border(self):
         self.screen.tracer(500)
@@ -124,11 +164,12 @@ class Board():
     def tracer(self, *args):
         self.screen.tracer(*args)
 
-    def update(self, *args):
-        self.screen.update(*args)
+    def update(self):
+        self.screen.update()
 
     def exitonclick(self):
         self.screen.exitonclick()
+
 
 class ScoreBoard:
     pass
@@ -136,7 +177,7 @@ class ScoreBoard:
 
 def main():
     the_screen = Board(40)
-    the_screen.screen.screensize(640, 640)
+    the_screen.screen.screensize(380, 380)
     the_screen.setup(width=1.0, height=1.0)
     the_screen.bgcolor("black")
     snake1 = Snake(the_screen)
@@ -145,11 +186,16 @@ def main():
     the_screen.onkey(key="q", fun=snake1.quit_game)
     the_screen.onkey(key="r", fun=snake1.reset)
     the_screen.listen()
+    my_food = Food(the_screen)
+    my_food.place_food()
     while True:
         snake1.move()
-        snake1.wall_collision_detect()
+#        snake1.wall_collision_detect()
 #       snake1.self_collision_detect()
-        snake1.food_collision_detect()
+        if snake1.food_collision_detect(my_food):
+            my_food.eat()
+            my_food = Food(the_screen)
+            my_food.place_food()
         sleep(0.125)
     the_screen.exitonclick()
 
