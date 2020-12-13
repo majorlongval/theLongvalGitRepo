@@ -5,7 +5,7 @@ from paddle import Paddle
 from scoreboard import Score
 
 START_HEADINGS = [0, 180, 30, 45, 135, 150, 210, 225, 345, 315]
-
+PADDLE_COLLISION_DISTANCE = 25
 
 class Ball(Turtle):
     def __init__(self, screen: Screen, paddle1: Paddle, paddle2: Paddle, scoreboard: Score):
@@ -22,6 +22,7 @@ class Ball(Turtle):
         self.shape(name="square")
         self.goto(0, 0)
         self.setheading(random.choice(START_HEADINGS))
+        print(f"Initial Heading: {self.heading()}")
         self.showturtle()
         self.screen.update()
 
@@ -44,12 +45,17 @@ class Ball(Turtle):
     def backstop_collision(self):
         if abs(self.xcor()) >= abs(self.screen.screensize()[0]):
             self.setheading(180 - self.heading())
-            self.scoreboard.left_inc()
+            if self.xcor() > 0:
+                self.scoreboard.left_inc()
+            else:
+                self.scoreboard.right_inc()
             self.scoreboard.update_scoreboard()
             print("Collision with backstop")
 
     def paddle_collision(self, paddle: Paddle):
+        self.screen.tracer(500)
         for segment in paddle:
-            if segment.distance(self.pos()) < 20:
+            if self.distance(segment.pos()) < PADDLE_COLLISION_DISTANCE:
                 self.setheading(180 - self.heading())
                 print("Collision with paddle", paddle)
+        self.screen.update()
