@@ -7,11 +7,12 @@ from typing import List
 
 
 class Paddle(List[Turtle]):
-
-    def __init__(self, screen: Screen, col: int, length: int = 4):
+    def __init__(self, screen: Screen, col: int, length: int = 4, name: str = "paddle"):
         super().__init__()
 
         self.screen = screen
+        self.name = name
+
         self.length = length
         self.append(Turtle())
         head = self[0]
@@ -28,16 +29,17 @@ class Paddle(List[Turtle]):
             self[-1].forward(20)
         self.screen.update()
 
+    def __str__(self):
+        return self.name
+
     def move_down(self):
         self.screen.tracer(500)
         for segment in self:
             segment.forward(20)
-        print("move down")
         self.screen.update()
 
     def move_up(self):
         self.screen.tracer(500)
         for segment in self:
             segment.backward(20)
-        print("move up")
         self.screen.update()
