@@ -24,22 +24,21 @@ class Snake:
         inv_segments = self.segments[::-1]
         for i, seg in enumerate(inv_segments[:-1]):
             seg.goto(x=inv_segments[i + 1].xcor(), y=inv_segments[i + 1].ycor())
+        self.segments[0].setheading(self.heading)
         self.segments[0].forward(self.segment_width)
 
-    def change_heading(self):
-        pass
-
     def up(self):
-        if self.heading == 90:
-            pass
-        else:
+        if not self.heading == 270:
             self.heading = 90
 
     def down(self):
-        pass
+        if not self.heading == 90:
+            self.heading = 270
 
     def left(self):
-        pass
+        if not self.heading == 0:
+            self.heading = 180
 
     def right(self):
-        pass
+        if not self.heading == 180:
+            self.heading = 0
