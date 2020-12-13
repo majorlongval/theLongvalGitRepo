@@ -8,7 +8,7 @@ screen.title('My snake game')
 screen.tracer(0)
 
 
-snake_speed = 10
+snake_speed = 20
 
 snake = Snake()
 
