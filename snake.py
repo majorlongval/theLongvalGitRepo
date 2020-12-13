@@ -8,6 +8,7 @@ class Snake:
         self.starting_position = (0, 0)
         self.segment_width = 20
         self.segments = self.initiate_segments()
+        self.heading = 0
 
     def initiate_segments(self):
         segments = []
@@ -23,4 +24,22 @@ class Snake:
         inv_segments = self.segments[::-1]
         for i, seg in enumerate(inv_segments[:-1]):
             seg.goto(x=inv_segments[i + 1].xcor(), y=inv_segments[i + 1].ycor())
-        self.segments[0].forward(20)
+        self.segments[0].forward(self.segment_width)
+
+    def change_heading(self):
+        pass
+
+    def up(self):
+        if self.heading == 90:
+            pass
+        else:
+            self.heading = 90
+
+    def down(self):
+        pass
+
+    def left(self):
+        pass
+
+    def right(self):
+        pass
