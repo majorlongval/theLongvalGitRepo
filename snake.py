@@ -1,5 +1,4 @@
 from turtle import Turtle
-import time
 
 UP = 90
 DOWN = 270
@@ -14,6 +13,7 @@ class Snake:
         self.segment_width = 20
         self.segments = self.initiate_segments()
         self.heading = RIGHT
+        self.head = self.segments[0]
 
     def initiate_segments(self):
         segments = []
@@ -29,10 +29,10 @@ class Snake:
         inv_segments = self.segments[::-1]
         for i, seg in enumerate(inv_segments[:-1]):
             seg.goto(x=inv_segments[i + 1].xcor(), y=inv_segments[i + 1].ycor())
-        self.segments[0].forward(self.segment_width)
+        self.head.forward(self.segment_width)
 
     def change_heading(self, direction):
-        self.segments[0].setheading(direction)
+        self.head.setheading(direction)
         self.heading = direction
 
     def up(self):
