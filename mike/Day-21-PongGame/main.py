@@ -7,6 +7,7 @@ from time import sleep
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
+MOVE_DELAY = 0.125  # seconds
 
 screen = Screen()
 screen.bgcolor("black")
@@ -20,14 +21,14 @@ screen.onkeypress(key="k", fun=paddle1.move_up)
 screen.onkeypress(key="f", fun=paddle2.move_down)
 screen.onkeypress(key="d", fun=paddle2.move_up)
 screen.onkeypress(key="q", fun=exit)
-screen.ontimer(fun=ball1.move, t=5)
+screen.ontimer(fun=ball1.move, t=1)
 screen.listen()
 
-mainloop()
+while True:
+    screen.tracer(0)
+    ball1.move()
+    sleep(MOVE_DELAY)
+    screen.update()
 
 
-def new_ball(screen: Screen, paddle1: Paddle, paddle2: Paddle, old_ball: Ball) -> Ball:
-    if old_ball is not None:
-        old_ball.hideturtle()
-        del old_ball
-    return Ball(screen=screen, paddle1=paddle1, paddle2=paddle2, old_ball=None)
+
