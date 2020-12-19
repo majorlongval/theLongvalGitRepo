@@ -18,7 +18,7 @@ class Player(Turtle):
         self.shape("turtle")
         self.goto(x=0, y=-340)
         self.setheading(90)
-        self.shapesize(stretch_wid=3, stretch_len=3)
+        self.shapesize(stretch_wid=2, stretch_len=2)
         self.showturtle()
 
     def go_down(self):
