@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 from turtle import Turtle
 import time
 
@@ -50,3 +51,11 @@ class Snake:
     def right(self):
         if self.heading != LEFT:
             self.change_heading(RIGHT)
+=======
+class Snake:
+    def __init__(self, ini_nb_parts=3, width=20, shape='square'):
+        self.ini_nb_parts = ini_nb_parts
+        self.width = width
+        self.shape = shape
+
+>>>>>>> Stashed changes
