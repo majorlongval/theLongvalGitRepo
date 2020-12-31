@@ -8,14 +8,14 @@ class Score(Turtle):
         self.hideturtle()
         self.color("white")
         self.penup()
-        self.goto(0,240)
+        self.goto(0,220)
         self.screen = screen
         self.current_score = [0,0]
         self.update_scoreboard()
 
     def update_scoreboard(self):
         self.clear()
-        self.write(self.score_str(), align="center", font=("Courier", 14, "normal"))
+        self.write(self.score_str(), align="center", font=("Courier", 80, "normal"))
 
     def score_str(self):
         return f"{self.current_score[0]} : {self.current_score[1]}"

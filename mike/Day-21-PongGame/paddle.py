@@ -6,7 +6,7 @@ from typing import List
 # Paddle = List[Turtle]
 
 
-class Paddle(List[Turtle]):
+class Paddle(Turtle):
     def __init__(self, screen: Screen, col: int, length: int = 4, name: str = "paddle"):
         super().__init__()
 
@@ -14,32 +14,23 @@ class Paddle(List[Turtle]):
         self.name = name
 
         self.length = length
-        self.append(Turtle())
-        head = self[0]
-        self.screen.tracer(500)
-        head.hideturtle()
-        head.goto(col, 0)
-        head.shape(name="square")
-        head.setheading(270)
-        head.color("white")
-        head.penup()
-        head.showturtle()
-        for _ in range(self.length):
-            self.append(self[-1].clone())
-            self[-1].forward(20)
+        self.hideturtle()
+        self.goto(col, 0)
+        self.shape(name="square")
+        self.setheading(270)
+        self.color("white")
+        self.penup()
+        self.turtlesize(stretch_wid=1, stretch_len=5)
+        self.showturtle()
+
+
         self.screen.update()
 
     def __str__(self):
         return self.name
 
     def move_down(self):
-        self.screen.tracer(500)
-        for segment in self:
-            segment.forward(20)
-        self.screen.update()
+        self.forward(20)
 
     def move_up(self):
-        self.screen.tracer(500)
-        for segment in self:
-            segment.backward(20)
-        self.screen.update()
+        self.backward(20)
