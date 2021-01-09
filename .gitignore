@@ -9,3 +9,4 @@ venv
 .DS_Store
 >>>>>>> mike
 env_3.8
+password*.*

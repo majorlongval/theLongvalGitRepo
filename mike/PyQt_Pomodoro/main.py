@@ -60,10 +60,10 @@ def count_down(count):
     global timer_label
     global active
     if active is True:
+        count -= 1
         mins = count // 60
         secs = count % 60
         timer_label.setText(f"{mins}:{secs:02}")
-        count -= 1
         if count >= 0:
             QTimer.singleShot(1000, lambda: count_down(count))
         else:
